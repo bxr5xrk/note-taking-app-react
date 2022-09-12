@@ -1,3 +1,4 @@
+import { prepopulatedData } from "./../../.data";
 import { INote } from "./../../types/index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
@@ -8,7 +9,7 @@ interface notesProps {
 }
 
 const initialState: notesProps = {
-    activeNotes: null,
+    activeNotes: [...prepopulatedData],
     archiveNotes: null,
 };
 

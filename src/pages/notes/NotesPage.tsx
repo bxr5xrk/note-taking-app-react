@@ -1,15 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectNotes } from "../../store/slices/notesSlice";
+import NotesList from "../../components/NotesList/NotesList";
 
 const NotesPage = () => {
-    const { activeNotes } = useSelector(selectNotes);
-
-    console.log(activeNotes);
     return (
-        <div>
+        <main>
             <h1>notesPage</h1>
-        </div>
+            <NotesList />
+        </main>
     );
 };
 

@@ -3,5 +3,5 @@ export interface INote {
     slug: string;
     content: string;
     category: string;
-    creatiomDate: string;
+    creationDate: string;
 }

@@ -10,7 +10,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <>
             <Header />
 
-            <main>{children}</main>
+            {children}
         </>
     );
 };
