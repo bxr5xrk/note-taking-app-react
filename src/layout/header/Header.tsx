@@ -36,7 +36,6 @@ c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"
 
 const Header = () => {
     const { pathname } = useLocation();
-    console.log(1);
 
     return (
         <header className={st.root}>

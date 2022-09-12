@@ -1,7 +1,8 @@
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Select from "../../components/Select/Select";
 import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
@@ -9,7 +10,7 @@ import { INote } from "../../types";
 import { parseDates } from "../../utils/parseDates";
 import st from "./NewNotePage.module.scss";
 
-const NewNotePage = () => {
+const NewNotePage: FC = () => {
     const { activeNotes } = useSelector(selectNotes);
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState(categories[0]);
@@ -43,10 +44,11 @@ const NewNotePage = () => {
                     slug,
                 };
                 dispatch(setActive(newNote));
+                localStorage.setItem("active", JSON.stringify(newNote));
 
                 navigate("/notes");
             } else {
-                console.log(title + "already exists");
+                console.error(title + "already exists");
             }
         }
     };
@@ -56,30 +58,22 @@ const NewNotePage = () => {
             <input
                 className={validate ? st.notValid : ""}
                 type="text"
+                autoFocus
                 placeholder="Enter title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
 
-            <div className={st.category}>
-                <p>Select Category:</p>
-                <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                >
-                    {categories.map((i) => (
-                        <option key={i} value={i}>
-                            {i}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <Select
+                category={category}
+                isEditable={true}
+                setCategory={setCategory}
+            />
 
             <textarea
                 className={validate ? st.notValid : ""}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                id="content"
                 placeholder="Enter content"
             ></textarea>
 
