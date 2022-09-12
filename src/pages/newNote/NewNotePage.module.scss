@@ -1,0 +1,13 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    textarea {
+        height: 200px;
+    }
+
+    .notValid {
+        border: 1px solid red;
+    }
+}

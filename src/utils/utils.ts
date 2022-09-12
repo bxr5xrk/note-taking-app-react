@@ -1,0 +1,1 @@
+export const cn = (array: string[]) => array.join(" ");

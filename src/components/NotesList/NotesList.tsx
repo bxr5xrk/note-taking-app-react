@@ -10,7 +10,15 @@ const NotesList = () => {
         <section>
             {activeNotes &&
                 activeNotes.map((i) => (
-                    <NoteItem title={i.title} slug={i.slug} />
+                    <NoteItem
+                        key={i.slug}
+                        title={i.title}
+                        slug={i.slug}
+                        content={i.content}
+                        creationDate={i.creationDate}
+                        category={i.category}
+                        parsedDates={i.parsedDates}
+                    />
                 ))}
         </section>
     );

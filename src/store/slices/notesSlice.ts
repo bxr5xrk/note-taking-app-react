@@ -17,8 +17,10 @@ const notesSlice = createSlice({
     name: "notes",
     initialState,
     reducers: {
-        setActive(state, action: PayloadAction<INote[]>) {
-            state.activeNotes = [...action.payload];
+        setActive(state, action: PayloadAction<INote>) {
+            if (state.activeNotes) {
+                state.activeNotes = [...state.activeNotes, action.payload];
+            }
         },
         setArchive(state, action: PayloadAction<INote[]>) {
             state.archiveNotes = [...action.payload];
