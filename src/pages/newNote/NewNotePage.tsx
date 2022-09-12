@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "../../components/Select/Select";
@@ -18,6 +18,7 @@ const NewNotePage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [validate, setValidate] = useState(false);
+    const titleRef = useRef<HTMLInputElement>(null);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -36,7 +37,8 @@ const NewNotePage: FC = () => {
                 const parsedDates = parseDates(content);
 
                 const newNote: INote = {
-                    title,
+                    id: Date.now(),
+                    title: title.at(0)?.toUpperCase() + title.slice(1),
                     content,
                     creationDate,
                     category,
@@ -44,11 +46,11 @@ const NewNotePage: FC = () => {
                     slug,
                 };
                 dispatch(setActive(newNote));
-                localStorage.setItem("active", JSON.stringify(newNote));
 
                 navigate("/notes");
             } else {
-                console.error(title + "already exists");
+                titleRef.current?.select();
+                console.error(title + " already exists");
             }
         }
     };
@@ -56,6 +58,7 @@ const NewNotePage: FC = () => {
     return (
         <form className={st.root} onSubmit={(e) => handleSubmit(e)}>
             <input
+                ref={titleRef}
                 className={validate ? st.notValid : ""}
                 type="text"
                 autoFocus

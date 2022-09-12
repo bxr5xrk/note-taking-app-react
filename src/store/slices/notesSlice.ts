@@ -8,14 +8,19 @@ const getActiveFromLS = () => {
     return data ? JSON.parse(data) : prepopulatedData;
 };
 
+const getArchiveFromLS = () => {
+    const data = localStorage.getItem("archive");
+    return data ? JSON.parse(data) : null;
+};
+
 interface notesProps {
-    activeNotes: INote[] | null;
+    activeNotes: INote[];
     archiveNotes: INote[] | null;
 }
 
 const initialState: notesProps = {
     activeNotes: getActiveFromLS(),
-    archiveNotes: null,
+    archiveNotes: getArchiveFromLS(),
 };
 
 const notesSlice = createSlice({
@@ -24,24 +29,57 @@ const notesSlice = createSlice({
     reducers: {
         setActive(state, action: PayloadAction<INote>) {
             if (state.activeNotes) {
-                state.activeNotes = [...state.activeNotes, action.payload];
+                const find = state.activeNotes.find(
+                    (i) => i.id === action.payload.id
+                );
+
+                if (find) {
+                    const index = state.activeNotes.indexOf(find);
+                    state.activeNotes.splice(index, 1, action.payload);
+                } else {
+                    state.activeNotes = [...state.activeNotes, action.payload];
+                }
+
+                localStorage.setItem(
+                    "active",
+                    JSON.stringify(state.activeNotes)
+                );
             }
         },
-        editNote(state, action: PayloadAction<INote>) {
+        deleteNote(state, action: PayloadAction<string>) {
             if (state.activeNotes) {
-                const index = state.activeNotes.indexOf(action.payload);
-                state.activeNotes.splice(index, 1, action.payload);
+                const find = state.activeNotes.find(
+                    (i) => i.slug === action.payload
+                );
+
+                if (find) {
+                    const index = state.activeNotes.indexOf(find);
+                    state.activeNotes.splice(index, 1);
+                }
+
+                localStorage.setItem(
+                    "active",
+                    JSON.stringify(state.activeNotes)
+                );
             }
-            localStorage.setItem("active", "");
-            localStorage.setItem("active", JSON.stringify(state.activeNotes));
         },
-        setArchive(state, action: PayloadAction<INote[]>) {
-            state.archiveNotes = [...action.payload];
+        setArchive(state, action: PayloadAction<string>) {
+            const find = state.activeNotes.find(
+                (i) => i.slug === action.payload
+            );
+            notesSlice.caseReducers.deleteNote(state, action);
+            if (find) {
+                if (state.archiveNotes) {
+                    state.archiveNotes = [...state.archiveNotes, find];
+                } else {
+                    state.archiveNotes = [find];
+                }
+            }
         },
     },
 });
 
-export const { setArchive, setActive, editNote } = notesSlice.actions;
+export const { setArchive, setActive, deleteNote } = notesSlice.actions;
 
 export const selectNotes = (state: RootState) => state.notes;
 

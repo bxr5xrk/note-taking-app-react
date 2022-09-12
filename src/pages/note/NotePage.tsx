@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Select from "../../components/Select/Select";
 import { categories } from "../../config";
-import { editNote, selectNotes } from "../../store/slices/notesSlice";
+import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
 import { INote } from "../../types";
 import { parseDates } from "../../utils/parseDates";
@@ -51,13 +51,13 @@ const NotePage = () => {
         e.preventDefault();
 
         const slug = title.replaceAll(" ", "-").toLowerCase();
-        const isExists = activeNotes?.find((i) => i.slug === slug);
 
-        if (isExists && note) {
+        if (note) {
             const creationDate = note.creationDate;
             const parsedDates = parseDates(content);
 
             const newNote: INote = {
+                id: note.id,
                 title,
                 content,
                 creationDate,
@@ -65,11 +65,8 @@ const NotePage = () => {
                 parsedDates,
                 slug,
             };
-            dispatch(editNote(newNote));
-
+            dispatch(setActive(newNote));
             setIsEditable(false);
-        } else {
-            console.error(title + "already exists");
         }
     };
 
@@ -80,33 +77,39 @@ const NotePage = () => {
 
     return (
         <form className={st.root} onSubmit={(e) => handleSubmit(e)}>
-            <Link to="/notes">back</Link>
             {note && (
                 <>
-                    {!isEditable && (
-                        <svg
-                            onClick={handleEditClick}
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 490.305 490.305"
-                        >
-                            <path
-                                d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
+                    <Link to="/notes" className={st.back}>
+                        back
+                    </Link>
+
+                    <div className={st.top}>
+                        {!isEditable && (
+                            <svg
+                                onClick={handleEditClick}
+                                version="1.1"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 490.305 490.305"
+                            >
+                                <path
+                                    d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
 		c-4.2,16.2,11.9,26.6,22.9,25l147-29.2c4.2,0,7.3-2.1,10.4-5.2l290.9-289.8C495.469,142.943,495.469,104.443,472.469,81.443z
 		 M354.669,46.043c6.3-7.3,18.8-7.3,26.1,0l17.3,17l-289.7,289.7l-30.1-30.4L354.669,46.043z M61.769,364.043l64.4,64.4l-80.1,15.8
 		L61.769,364.043z M444.369,135.643l-276.8,276.8l-30.1-30.4l290-290l16.8,16.5C453.469,118.343,449.169,130.743,444.369,135.643z"
-                            />
-                        </svg>
-                    )}
+                                />
+                            </svg>
+                        )}
+                        <input
+                            ref={titleRef}
+                            type="text"
+                            readOnly={!isEditable}
+                            placeholder="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
 
-                    <input
-                        ref={titleRef}
-                        type="text"
-                        readOnly={!isEditable}
-                        placeholder="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
+                    <p>{note.creationDate}</p>
 
                     <Select
                         category={category}
@@ -121,11 +124,9 @@ const NotePage = () => {
                         placeholder="Enter content"
                     ></textarea>
 
-                    {isEditable && (
-                        <button className="btn" type="submit">
-                            submit
-                        </button>
-                    )}
+                    <button className="btn" type="submit">
+                        submit
+                    </button>
                 </>
             )}
         </form>
