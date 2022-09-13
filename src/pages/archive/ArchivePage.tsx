@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import NoteItem from "../../components/NoteItem/NoteItem";
+import NotesList from "../../components/NotesList/NotesList";
 import { selectNotes } from "../../store/slices/notesSlice";
 
 const ArchivePage = () => {
@@ -8,19 +8,8 @@ const ArchivePage = () => {
 
     return (
         <section>
-            {archiveNotes &&
-                archiveNotes.map((i) => (
-                    <NoteItem
-                        type="archive"
-                        key={i.slug}
-                        title={i.title}
-                        slug={i.slug}
-                        content={i.content}
-                        creationDate={i.creationDate}
-                        category={i.category}
-                        parsedDates={i.parsedDates}
-                    />
-                ))}
+            {archiveNotes && <NotesList notes={archiveNotes} type="archive" />}
+            {!archiveNotes?.length && <h2>No archived notes</h2>}
         </section>
     );
 };

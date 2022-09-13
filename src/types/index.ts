@@ -7,5 +7,3 @@ export interface INote {
     creationDate: string;
     parsedDates: string[];
 }
-
-// export type category = "Idea" | "Task" | "Random Thought";

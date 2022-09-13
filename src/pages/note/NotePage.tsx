@@ -50,7 +50,8 @@ const NotePage = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const slug = title.replaceAll(" ", "-").toLowerCase();
+        const prettifyTitle = title.replaceAll(/[^\w ]/g, "");
+        const slug = prettifyTitle.replaceAll(" ", "-").toLowerCase();
 
         if (note) {
             const creationDate = note.creationDate;
@@ -58,7 +59,8 @@ const NotePage = () => {
 
             const newNote: INote = {
                 id: note.id,
-                title,
+                title:
+                    prettifyTitle.at(0)?.toUpperCase() + prettifyTitle.slice(1),
                 content,
                 creationDate,
                 category,
@@ -124,9 +126,11 @@ const NotePage = () => {
                         placeholder="Enter content"
                     ></textarea>
 
-                    <button className="btn" type="submit">
-                        submit
-                    </button>
+                    {isEditable && (
+                        <button className="btn" type="submit">
+                            submit
+                        </button>
+                    )}
                 </>
             )}
         </form>

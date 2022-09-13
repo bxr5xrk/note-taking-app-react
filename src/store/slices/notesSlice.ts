@@ -76,8 +76,8 @@ const notesSlice = createSlice({
             const find = state.activeNotes.find(
                 (i) => i.slug === action.payload
             );
-            notesSlice.caseReducers.deleteNote(state, action);
             if (find) {
+                notesSlice.caseReducers.deleteNote(state, action);
                 if (state.archiveNotes) {
                     state.archiveNotes = [...state.archiveNotes, find];
                 } else {

@@ -1,26 +1,28 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectNotes } from "../../store/slices/notesSlice";
+import React, { FC } from "react";
+import { INote } from "../../types";
 import NoteItem from "../NoteItem/NoteItem";
+import st from "./NotesList.module.scss";
 
-const NotesList = () => {
-    const { activeNotes } = useSelector(selectNotes);
+interface NotesListProps {
+    notes: INote[];
+    type: "active" | "archive";
+}
 
+const NotesList: FC<NotesListProps> = ({ notes, type }) => {
     return (
-        <section>
-            {activeNotes &&
-                activeNotes.map((i) => (
-                    <NoteItem
-                        type="active"
-                        key={i.slug}
-                        title={i.title}
-                        slug={i.slug}
-                        content={i.content}
-                        creationDate={i.creationDate}
-                        category={i.category}
-                        parsedDates={i.parsedDates}
-                    />
-                ))}
+        <section className={st.root}>
+            {notes.map((i) => (
+                <NoteItem
+                    type={type}
+                    key={i.slug}
+                    title={i.title}
+                    slug={i.slug}
+                    content={i.content}
+                    creationDate={i.creationDate}
+                    category={i.category}
+                    parsedDates={i.parsedDates}
+                />
+            ))}
         </section>
     );
 };
