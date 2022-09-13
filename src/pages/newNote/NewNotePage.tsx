@@ -29,7 +29,9 @@ const NewNotePage: FC = () => {
                 setValidate(false);
             }, 1000);
         } else {
-            const slug = title.replaceAll(" ", "-").toLowerCase();
+            const prettifyTitle = title.replaceAll(/[^\w ]/g, "");
+
+            const slug = prettifyTitle.replaceAll(" ", "-").toLowerCase();
             const isExists = activeNotes?.find((i) => i.slug === slug);
 
             if (!isExists) {
@@ -38,7 +40,9 @@ const NewNotePage: FC = () => {
 
                 const newNote: INote = {
                     id: Date.now(),
-                    title: title.at(0)?.toUpperCase() + title.slice(1),
+                    title:
+                        prettifyTitle.at(0)?.toUpperCase() +
+                        prettifyTitle.slice(1),
                     content,
                     creationDate,
                     category,
