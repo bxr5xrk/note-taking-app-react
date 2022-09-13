@@ -16,3 +16,5 @@
 -   localStorage
 -   Stats for notes
 -   parse dates from note content
+
+[![Screenshot-20220913-132538.png](https://i.postimg.cc/c1YtPr8C/Screenshot-20220913-132538.png)](https://postimg.cc/SjSKMQdb)
