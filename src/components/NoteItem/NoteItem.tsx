@@ -5,8 +5,8 @@ import { useAppDispatch } from "../../store/store";
 import { INote } from "../../types";
 import st from "./NoteItem.module.scss";
 
-const NoteItem: FC<
-    Pick<
+interface NoteItemProps
+    extends Pick<
         INote,
         | "title"
         | "slug"
@@ -14,22 +14,36 @@ const NoteItem: FC<
         | "creationDate"
         | "category"
         | "parsedDates"
-    >
-> = ({ title, slug, content, creationDate, category, parsedDates }) => {
+    > {
+    type: "active" | "archive";
+}
+
+const NoteItem: FC<NoteItemProps> = ({
+    type,
+    title,
+    slug,
+    content,
+    creationDate,
+    category,
+    parsedDates,
+}) => {
     const navigate = useNavigate();
     const [showOptions, setshowOptions] = useState(false);
     const dispatch = useAppDispatch();
 
     return (
         <div className={st.root}>
+            <h3 onClick={() => (type === "active" ? navigate(slug) : null)}>
+                {title}
+            </h3>
             {showOptions && (
                 <div className={st.options}>
                     <span onClick={() => dispatch(deleteNote(slug))}>del</span>
-                    <span onClick={() => dispatch(setArchive(slug))}>arch</span>
+                    <span onClick={() => dispatch(setArchive(slug))}>
+                        {type === "active" ? "arch" : "un Arch"}
+                    </span>
                 </div>
             )}
-
-            <h3 onClick={() => navigate(slug)}>{title}</h3>
             <span onClick={() => setshowOptions(!showOptions)}>...</span>
             <p className={st.content}>{content}</p>
             <div className={st.stats}>

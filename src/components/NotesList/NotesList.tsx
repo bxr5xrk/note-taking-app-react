@@ -11,6 +11,7 @@ const NotesList = () => {
             {activeNotes &&
                 activeNotes.map((i) => (
                     <NoteItem
+                        type="active"
                         key={i.slug}
                         title={i.title}
                         slug={i.slug}
