@@ -7,7 +7,7 @@
 -   React router v6
 -   SCSS modules
 
-### Desciption
+### Description
 
 -   date-fnc for working with dates
 -   add, edit, delete notes
