@@ -87,7 +87,7 @@ const NoteItem: FC<NoteItemProps> = ({
     parsedDates,
 }) => {
     const navigate = useNavigate();
-    const [showOptions, setshowOptions] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     const dispatch = useAppDispatch();
 
     return (
@@ -113,7 +113,7 @@ const NoteItem: FC<NoteItemProps> = ({
                     {title}
                 </h2>
                 <svg
-                    onClick={() => setshowOptions(!showOptions)}
+                    onClick={() => setShowOptions(!showOptions)}
                     version="1.1"
                     viewBox="0 0 194.828 194.828"
                 >

@@ -108,6 +108,8 @@ const NotePage = () => {
                             placeholder="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                            maxLength={30}
+                            minLength={2}
                         />
                     </div>
 
