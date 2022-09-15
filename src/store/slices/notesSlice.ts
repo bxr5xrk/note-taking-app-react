@@ -42,35 +42,27 @@ const notesSlice = createSlice({
             localStorage.setItem("active", JSON.stringify(state.activeNotes));
         },
         deleteNote(state, action: PayloadAction<string>) {
-            if (state.activeNotes) {
-                const find = state.activeNotes.find(
-                    (i) => i.slug === action.payload
-                );
+            const find = state.activeNotes.find(
+                (i) => i.slug === action.payload
+            );
 
-                if (find) {
-                    const index = state.activeNotes.indexOf(find);
-                    state.activeNotes.splice(index, 1);
-                } else {
-                    if (state.archiveNotes) {
-                        const find = state.archiveNotes.find(
-                            (i) => i.slug === action.payload
-                        );
-                        if (find) {
-                            const index = state.archiveNotes.indexOf(find);
-                            state.archiveNotes.splice(index, 1);
-                        }
+            if (find) {
+                const index = state.activeNotes.indexOf(find);
+                state.activeNotes.splice(index, 1);
+            } else {
+                if (state.archiveNotes) {
+                    const find = state.archiveNotes.find(
+                        (i) => i.slug === action.payload
+                    );
+                    if (find) {
+                        const index = state.archiveNotes.indexOf(find);
+                        state.archiveNotes.splice(index, 1);
                     }
                 }
-
-                localStorage.setItem(
-                    "active",
-                    JSON.stringify(state.activeNotes)
-                );
-                localStorage.setItem(
-                    "archive",
-                    JSON.stringify(state.archiveNotes)
-                );
             }
+
+            localStorage.setItem("active", JSON.stringify(state.activeNotes));
+            localStorage.setItem("archive", JSON.stringify(state.archiveNotes));
         },
         setArchive(state, action: PayloadAction<string>) {
             const find = state.activeNotes.find(

@@ -7,7 +7,7 @@ import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
 import { INote } from "../../types";
-import { parseDates } from "../../utils/parseDates";
+import { createNoteObj } from "../../utils/createNoteObj";
 import st from "./NotePage.module.scss";
 
 const NotePage = () => {
@@ -50,25 +50,30 @@ const NotePage = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const prettifyTitle = title.replaceAll(/[^\w ]/g, "");
-        const slug = prettifyTitle.replaceAll(" ", "-").toLowerCase();
-
         if (note) {
-            const creationDate = note.creationDate;
-            const parsedDates = parseDates(content);
-
-            const newNote: INote = {
-                id: note.id,
-                title:
-                    prettifyTitle.at(0)?.toUpperCase() + prettifyTitle.slice(1),
+            const editedNote = createNoteObj(
+                activeNotes,
+                title,
                 content,
-                creationDate,
                 category,
-                parsedDates,
-                slug,
-            };
-            dispatch(setActive(newNote));
-            setIsEditable(false);
+                note.creationDate,
+                note.id
+            );
+            if (editedNote) {
+                dispatch(setActive(editedNote));
+                setIsEditable(false);
+            } else {
+                if (titleRef.current) {
+                    titleRef.current.style.color = "red";
+
+                    setTimeout(() => {
+                        if (titleRef.current) {
+                            titleRef.current.style.color = "black";
+                            titleRef.current.select();
+                        }
+                    }, 1000);
+                }
+            }
         }
     };
 

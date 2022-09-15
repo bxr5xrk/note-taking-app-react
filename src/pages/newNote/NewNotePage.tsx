@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import React, { FC, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +5,7 @@ import Select from "../../components/Select/Select";
 import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
-import { INote } from "../../types";
-import { parseDates } from "../../utils/parseDates";
+import { createNoteObj } from "../../utils/createNoteObj";
 import st from "./NewNotePage.module.scss";
 
 const NewNotePage: FC = () => {
@@ -29,32 +27,21 @@ const NewNotePage: FC = () => {
                 setValidate(false);
             }, 1000);
         } else {
-            const prettifyTitle = title.replaceAll(/[^\w ]/g, "");
-
-            const slug = prettifyTitle.replaceAll(" ", "-").toLowerCase();
-            const isExists = activeNotes?.find((i) => i.slug === slug);
-
-            if (!isExists) {
-                const creationDate = format(new Date(), "dd.MM.yyyy");
-                const parsedDates = parseDates(content);
-
-                const newNote: INote = {
-                    id: Date.now(),
-                    title:
-                        prettifyTitle.at(0)?.toUpperCase() +
-                        prettifyTitle.slice(1),
-                    content,
-                    creationDate,
-                    category,
-                    parsedDates,
-                    slug,
-                };
-                dispatch(setActive(newNote));
-
+            const note = createNoteObj(activeNotes, title, content, category);
+            if (note) {
+                dispatch(setActive(note));
                 navigate("/notes");
             } else {
-                titleRef.current?.select();
-                console.error(title + " already exists");
+                if (titleRef.current) {
+                    titleRef.current.style.color = "red";
+
+                    setTimeout(() => {
+                        if (titleRef.current) {
+                            titleRef.current.style.color = "black";
+                            titleRef.current.select();
+                        }
+                    }, 1000);
+                }
             }
         }
     };
