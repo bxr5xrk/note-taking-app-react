@@ -56,8 +56,8 @@ const NotePage = () => {
                 title,
                 content,
                 category,
-                note.creationDate,
-                note.id
+                note.id,
+                note.creationDate
             );
             if (editedNote) {
                 dispatch(setActive(editedNote));

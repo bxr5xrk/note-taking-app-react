@@ -27,7 +27,13 @@ const NewNotePage: FC = () => {
                 setValidate(false);
             }, 1000);
         } else {
-            const note = createNoteObj(activeNotes, title, content, category);
+            const note = createNoteObj(
+                activeNotes,
+                title,
+                content,
+                category,
+                Date.now()
+            );
             if (note) {
                 dispatch(setActive(note));
                 navigate("/notes");
