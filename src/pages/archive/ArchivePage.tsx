@@ -8,7 +8,7 @@ const ArchivePage = () => {
 
     return (
         <section>
-            {archiveNotes && <NotesList notes={archiveNotes} type="archive" />}
+            {<NotesList notes={archiveNotes} type="archive" />}
         </section>
     );
 };
