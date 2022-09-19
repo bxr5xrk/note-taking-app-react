@@ -14,23 +14,26 @@ const Summary = () => {
 
     return (
         <section className={st.root}>
-            {items.map((i) => (
-                <div key={i.category} className={st_.root}>
-                    <h1>{i.category}</h1>
+            <h1>Summary</h1>
+            <div className={st.list}>
+                {items.map((i) => (
+                    <div key={i.category} className={st_.root}>
+                        <h1>{i.category}</h1>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                        }}
-                    >
-                        <h3>Total: {i.count.total}</h3>
-                        <h3>Active: {i.count.active}</h3>
-                        <h3>Archive: {i.count.archive}</h3>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                            }}
+                        >
+                            <h3>Total: {i.count.total}</h3>
+                            <h3>Active: {i.count.active}</h3>
+                            <h3>Archive: {i.count.archive}</h3>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </section>
     );
 };

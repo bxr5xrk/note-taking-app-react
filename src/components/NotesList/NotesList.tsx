@@ -10,23 +10,26 @@ interface NotesListProps {
 
 const NotesList: FC<NotesListProps> = ({ notes, type }) => {
     if (!notes.length) {
-        return <h2>No notes</h2>
+        return <h2>No notes</h2>;
     }
 
     return (
         <section className={st.root}>
-            {notes.map((i) => (
-                <NoteItem
-                    type={type}
-                    key={i.slug}
-                    title={i.title}
-                    slug={i.slug}
-                    content={i.content}
-                    creationDate={i.creationDate}
-                    category={i.category}
-                    parsedDates={i.parsedDates}
-                />
-            ))}
+            <h1>Notes</h1>
+            <div className={st.list}>
+                {notes.map((i) => (
+                    <NoteItem
+                        type={type}
+                        key={i.slug}
+                        title={i.title}
+                        slug={i.slug}
+                        content={i.content}
+                        creationDate={i.creationDate}
+                        category={i.category}
+                        parsedDates={i.parsedDates}
+                    />
+                ))}
+            </div>
         </section>
     );
 };
