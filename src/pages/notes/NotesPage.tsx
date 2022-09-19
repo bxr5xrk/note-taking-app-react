@@ -10,7 +10,7 @@ const NotesPage = () => {
 
     return (
         <main className={st.root}>
-            <NotesList notes={activeNotes} type="active" />
+            <NotesList notes={activeNotes} type="active" title="Notes" />
 
             <Summary />
         </main>

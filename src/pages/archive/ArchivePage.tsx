@@ -8,7 +8,13 @@ const ArchivePage = () => {
 
     return (
         <section>
-            {<NotesList notes={archiveNotes} type="archive" />}
+            {
+                <NotesList
+                    notes={archiveNotes}
+                    type="archive"
+                    title="Archive notes"
+                />
+            }
         </section>
     );
 };

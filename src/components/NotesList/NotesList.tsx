@@ -6,16 +6,17 @@ import st from "./NotesList.module.scss";
 interface NotesListProps {
     notes: INote[] | null;
     type: "active" | "archive";
+    title: string;
 }
 
-const NotesList: FC<NotesListProps> = ({ notes, type }) => {
+const NotesList: FC<NotesListProps> = ({ notes, type, title }) => {
     if (!notes?.length) {
         return <h2>No notes</h2>;
     }
 
     return (
         <section className={st.root}>
-            <h1>Notes</h1>
+            <h1>{title}</h1>
             <div className={st.list}>
                 {notes &&
                     notes.map((i) => (
