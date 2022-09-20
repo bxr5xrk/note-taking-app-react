@@ -5,7 +5,7 @@
 -   React (TS)
 -   RTK
 -   React router v6
--   SCSS modules
+-   Tailwind
 
 ### Description
 
