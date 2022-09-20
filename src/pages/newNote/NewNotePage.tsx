@@ -6,7 +6,7 @@ import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
 import { createNoteObj } from "../../utils/createNoteObj";
-import st from "./NewNotePage.module.scss";
+import { wrongTitle } from "../../utils/wrongTitle";
 
 const NewNotePage: FC = () => {
     const { activeNotes } = useSelector(selectNotes);
@@ -15,48 +15,34 @@ const NewNotePage: FC = () => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [validate, setValidate] = useState(false);
     const titleRef = useRef<HTMLInputElement>(null);
+    const contentRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!content) {
-            setValidate(true);
-
-            setTimeout(() => {
-                setValidate(false);
-            }, 1000);
+        const note = createNoteObj(
+            activeNotes,
+            title,
+            content,
+            category,
+            Date.now()
+        );
+        if (note) {
+            dispatch(setActive(note));
+            navigate("/notes");
         } else {
-            const note = createNoteObj(
-                activeNotes,
-                title,
-                content,
-                category,
-                Date.now()
-            );
-            if (note) {
-                dispatch(setActive(note));
-                navigate("/notes");
-            } else {
-                if (titleRef.current) {
-                    titleRef.current.style.color = "red";
-
-                    setTimeout(() => {
-                        if (titleRef.current) {
-                            titleRef.current.style.color = "black";
-                            titleRef.current.select();
-                        }
-                    }, 1000);
-                }
-            }
+            wrongTitle(titleRef);
+            wrongTitle(contentRef);
         }
     };
 
     return (
-        <form className={st.root} onSubmit={(e) => handleSubmit(e)}>
+        <form
+            className="flex flex-col items-start gap-5"
+            onSubmit={(e) => handleSubmit(e)}
+        >
             <input
                 ref={titleRef}
-                className={validate ? st.notValid : ""}
                 type="text"
                 autoFocus
                 placeholder="Enter title"
@@ -64,6 +50,7 @@ const NewNotePage: FC = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={30}
                 minLength={2}
+                className="text-4xl font-semibold"
             />
 
             <Select
@@ -73,10 +60,11 @@ const NewNotePage: FC = () => {
             />
 
             <textarea
-                className={validate ? st.notValid : ""}
+                ref={contentRef}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Enter content"
+                className="h-[400px] w-[400px] text-xl"
             ></textarea>
 
             <button className="btn" type="submit">

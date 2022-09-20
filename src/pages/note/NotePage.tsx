@@ -8,7 +8,7 @@ import { selectNotes, setActive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
 import { INote } from "../../types";
 import { createNoteObj } from "../../utils/createNoteObj";
-import st from "./NotePage.module.scss";
+import { wrongTitle } from "../../utils/wrongTitle";
 
 const NotePage = () => {
     const { slugParams } = useParams();
@@ -63,16 +63,7 @@ const NotePage = () => {
                 dispatch(setActive(editedNote));
                 setIsEditable(false);
             } else {
-                if (titleRef.current) {
-                    titleRef.current.style.color = "red";
-
-                    setTimeout(() => {
-                        if (titleRef.current) {
-                            titleRef.current.style.color = "black";
-                            titleRef.current.select();
-                        }
-                    }, 1000);
-                }
+                wrongTitle(titleRef);
             }
         }
     };
@@ -83,20 +74,24 @@ const NotePage = () => {
     };
 
     return (
-        <form className={st.root} onSubmit={(e) => handleSubmit(e)}>
+        <form
+            className="flex flex-col items-start gap-5"
+            onSubmit={(e) => handleSubmit(e)}
+        >
             {note && (
                 <>
-                    <Link to="/notes" className={st.back}>
+                    <Link to="/notes" className="underline">
                         back
                     </Link>
 
-                    <div className={st.top}>
+                    <div className="flex items-center gap-2">
                         {!isEditable && (
                             <svg
                                 onClick={handleEditClick}
                                 version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 490.305 490.305"
+                                className="h-5 w-5 cursor-pointer opacity-50"
                             >
                                 <path
                                     d="M472.469,81.443l-63.6-63.6c-13.1-16.4-53.2-30.2-83.4,0l-290.9,289.9l0,0c-4.4,4.4-6.5,10.1-6.2,15.6l-27.1,141.8
@@ -115,6 +110,7 @@ const NotePage = () => {
                             onChange={(e) => setTitle(e.target.value)}
                             maxLength={30}
                             minLength={2}
+                            className="text-4xl font-semibold"
                         />
                     </div>
 
@@ -131,6 +127,7 @@ const NotePage = () => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         placeholder="Enter content"
+                        className="h-[400px] w-[400px] text-xl"
                     ></textarea>
 
                     {isEditable && (
