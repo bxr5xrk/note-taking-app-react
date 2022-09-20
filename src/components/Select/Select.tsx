@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { categories } from "../../config";
-import st from "./Select.module.scss";
 
 interface SelectProps {
     category: string;
@@ -10,12 +9,13 @@ interface SelectProps {
 
 const Select: FC<SelectProps> = ({ category, isEditable, setCategory }) => {
     return (
-        <div className={st.root}>
+        <div className="flex gap-2.5 font-semibold">
             {isEditable && <p>Select Category:</p>}
             <select
                 value={category}
                 disabled={!isEditable}
                 onChange={(e) => setCategory(e.target.value)}
+                className="cursor-pointer text-primary underline"
             >
                 {categories.map((i) => (
                     <option key={i} value={i}>

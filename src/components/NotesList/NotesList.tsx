@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { INote } from "../../types";
 import NoteItem from "../NoteItem/NoteItem";
-import st from "./NotesList.module.scss";
 
 interface NotesListProps {
     notes: INote[] | null;
@@ -15,9 +14,9 @@ const NotesList: FC<NotesListProps> = ({ notes, type, title }) => {
     }
 
     return (
-        <section className={st.root}>
+        <section className="flex flex-col items-center gap-4">
             <h1>{title}</h1>
-            <div className={st.list}>
+            <div className="grid w-full grid-cols-3 gap-5">
                 {notes &&
                     notes.map((i) => (
                         <NoteItem

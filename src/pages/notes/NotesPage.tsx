@@ -3,13 +3,12 @@ import { useSelector } from "react-redux";
 import NotesList from "../../components/NotesList/NotesList";
 import Summary from "../../components/Summary/Summary";
 import { selectNotes } from "../../store/slices/notesSlice";
-import st from "./NotesPage.module.scss";
 
 const NotesPage = () => {
     const { activeNotes } = useSelector(selectNotes);
 
     return (
-        <main className={st.root}>
+        <main className="flex flex-col justify-between gap-5">
             <NotesList notes={activeNotes} type="active" title="Notes" />
 
             <Summary />

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { deleteNote, setArchive } from "../../store/slices/notesSlice";
 import { useAppDispatch } from "../../store/store";
 import { INote } from "../../types";
-import st from "./NoteItem.module.scss";
 
 const svgIcons = [
     <svg
@@ -91,9 +90,9 @@ const NoteItem: FC<NoteItemProps> = ({
     const dispatch = useAppDispatch();
 
     return (
-        <div className={st.root}>
+        <div className="relative flex min-w-full flex-col gap-4 rounded-2xl border border-primary p-4">
             {showOptions && (
-                <div className={st.options}>
+                <div className="absolute -top-8 right-0 flex gap-2.5 rounded-3xl border border-primary bg-primary fill-white p-3">
                     <span
                         title="delete"
                         onClick={() => dispatch(deleteNote(slug))}
@@ -108,8 +107,11 @@ const NoteItem: FC<NoteItemProps> = ({
                     </span>
                 </div>
             )}
-            <div className={st.top}>
-                <h2 onClick={() => (type === "active" ? navigate(slug) : null)}>
+            <div className="flex items-center justify-between gap-2.5">
+                <h2
+                    className="cursor-pointer overflow-hidden overflow-ellipsis whitespace-nowrap text-left"
+                    onClick={() => (type === "active" ? navigate(slug) : null)}
+                >
                     {title}
                 </h2>
                 <svg
@@ -135,14 +137,21 @@ const NoteItem: FC<NoteItemProps> = ({
                 </svg>
             </div>
 
-            <p className={st.content}>{content}</p>
-            <div className={st.stats}>
-                <p>{category}</p>
+            <p className="overflow-x-hidden overflow-ellipsis whitespace-nowrap text-left">
+                {content}
+            </p>
+            <div className="flex justify-between">
+                <p className="text-primary underline">{category}</p>
                 <p>{creationDate}</p>
             </div>
-            <div className={st.dates}>
+            <div className="flex gap-4 overflow-x-scroll pb-1">
                 {parsedDates.map((i) => (
-                    <span key={i}>{i}</span>
+                    <span
+                        className="duration-3000 cursor-pointer rounded-[20px] border border-primary bg-light_primary px-2.5 py-1 text-primary transition-all hover:bg-primary hover:text-white"
+                        key={i}
+                    >
+                        {i}
+                    </span>
                 ))}
             </div>
         </div>

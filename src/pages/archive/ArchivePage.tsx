@@ -7,15 +7,7 @@ const ArchivePage = () => {
     const { archiveNotes } = useSelector(selectNotes);
 
     return (
-        <section>
-            {
-                <NotesList
-                    notes={archiveNotes}
-                    type="archive"
-                    title="Archive notes"
-                />
-            }
-        </section>
+        <NotesList notes={archiveNotes} type="archive" title="Archive notes" />
     );
 };
 

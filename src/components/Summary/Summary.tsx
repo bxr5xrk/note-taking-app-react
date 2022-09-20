@@ -2,8 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectNotes } from "../../store/slices/notesSlice";
 import { calculateCategoriesCount } from "../../utils/calculateCategoriesCount";
-import st from "../NotesList/NotesList.module.scss";
-import st_ from "../NoteItem/NoteItem.module.scss";
 
 const Summary = () => {
     const { activeNotes, archiveNotes } = useSelector(selectNotes);
@@ -13,19 +11,20 @@ const Summary = () => {
         : calculateCategoriesCount(activeNotes);
 
     return (
-        <section className={st.root}>
-            <h1 className="text-left border p-2 rounded-3xl border-green-700">
-                Summary
-            </h1>
-            <div className={st.list}>
+        <section className="flex flex-col items-center justify-between gap-3">
+            <h1>Summary</h1>
+            <div className="grid grid-cols-3 gap-5 w-full">
                 {items.map((i) => (
-                    <div key={i.category} className={st_.root}>
-                        <h1>{i.category}</h1>
+                    <div
+                        key={i.category}
+                        className="flex flex-col gap-4 rounded-2xl border border-primary p-4"
+                    >
+                        <h3>{i.category}</h3>
 
-                        <div className="flex flex-col items-start">
-                            <h3>Total: {i.count.total}</h3>
-                            <h3>Active: {i.count.active}</h3>
-                            <h3>Archive: {i.count.archive}</h3>
+                        <div className="flex flex-col items-start font-bold">
+                            <p>Total: {i.count.total}</p>
+                            <p>Active: {i.count.active}</p>
+                            <p>Archive: {i.count.archive}</p>
                         </div>
                     </div>
                 ))}

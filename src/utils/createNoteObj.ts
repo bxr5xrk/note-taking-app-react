@@ -10,6 +10,10 @@ export const createNoteObj = (
     id: number,
     noteCreationDate?: string
 ) => {
+    if (noteTitle.length < 1 || content.length < 1) {
+        return null;
+    }
+
     const prettifyTitle = noteTitle.replaceAll(/[^\w ]/g, "");
     const slug = prettifyTitle.replaceAll(" ", "-").toLowerCase();
     const isExists = activeNotes
