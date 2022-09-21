@@ -11,7 +11,6 @@ const svgIcons = [
         viewBox="0 0 307.252 307.252"
     >
         <path
-            id="XMLID_564_"
             d="M184.581,230.833l9.521-100.238c0.575-6.048,5.931-10.48,11.991-9.911
 	c6.048,0.575,10.485,5.943,9.911,11.991l-9.521,100.238c-0.541,5.694-5.332,9.961-10.938,9.961c-0.348,0-0.699-0.017-1.053-0.05
 	C188.444,242.249,184.007,236.881,184.581,230.833z M45.306,37.023h216.644c6.075,0,11-4.925,11-11s-4.925-11-11-11h-61.998
@@ -90,7 +89,7 @@ const NoteItem: FC<NoteItemProps> = ({
     const dispatch = useAppDispatch();
 
     return (
-        <div className="relative flex min-w-full flex-col gap-4 rounded-2xl border border-primary p-4">
+        <div className="relative flex  flex-col gap-4 rounded-2xl border border-primary p-4 max-w-[387px]">
             {showOptions && (
                 <div className="absolute -top-8 right-0 flex gap-2.5 rounded-3xl border border-primary bg-primary fill-white p-3">
                     <span
