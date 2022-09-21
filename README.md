@@ -6,6 +6,7 @@
 -   RTK
 -   React router v6
 -   Tailwind
+-   Storybook
 
 ### Description
 
