@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { categories } from "../../config";
 
 interface SelectProps {
@@ -27,4 +27,4 @@ const Select: FC<SelectProps> = ({ category, isEditable, setCategory }) => {
     );
 };
 
-export default Select;
+export default memo(Select);
