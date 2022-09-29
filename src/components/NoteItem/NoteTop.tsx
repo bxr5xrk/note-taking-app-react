@@ -62,11 +62,11 @@ const svgIcons = [
     </svg>,
 ];
 
-interface NoteTopProps extends Pick<INote, "title" | "slug"> {
+interface NoteTopProps extends Pick<INote, "title" | "slug" | "id"> {
     type: "active" | "archive";
 }
 
-const NoteTop: FC<NoteTopProps> = ({ slug, type, title }) => {
+const NoteTop: FC<NoteTopProps> = ({ slug, type, title, id }) => {
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
     const dispatch = useAppDispatch();
@@ -77,13 +77,13 @@ const NoteTop: FC<NoteTopProps> = ({ slug, type, title }) => {
                 <div className="absolute -top-8 right-0 flex gap-2.5 rounded-3xl border border-primary bg-primary fill-white p-3">
                     <span
                         title="delete"
-                        onClick={() => dispatch(deleteNote(slug))}
+                        onClick={() => dispatch(deleteNote(id))}
                     >
                         {svgIcons[0]}
                     </span>
                     <span
                         title="archive / unarchive"
-                        onClick={() => dispatch(setArchive(slug))}
+                        onClick={() => dispatch(setArchive(id))}
                     >
                         {type === "active" ? svgIcons[1] : svgIcons[2]}
                     </span>

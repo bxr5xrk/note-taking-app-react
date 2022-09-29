@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
 import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
@@ -101,16 +102,12 @@ const NotePage = () => {
                                 />
                             </svg>
                         )}
-                        <input
-                            ref={titleRef}
-                            type="text"
-                            readOnly={!isEditable}
-                            placeholder="title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            maxLength={30}
-                            minLength={2}
-                            className="text-4xl font-semibold"
+
+                        <Input
+                            titleRef={titleRef}
+                            title={title}
+                            setTitle={setTitle}
+                            isEditable={!isEditable}
                         />
                     </div>
 

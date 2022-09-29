@@ -12,11 +12,13 @@ interface NoteItemProps
         | "creationDate"
         | "category"
         | "parsedDates"
+        | "id"
     > {
     type: "active" | "archive";
 }
 
 const NoteItem: FC<NoteItemProps> = ({
+    id,
     type,
     title,
     slug,
@@ -27,7 +29,7 @@ const NoteItem: FC<NoteItemProps> = ({
 }) => {
     return (
         <div className="relative flex  flex-col gap-4 rounded-2xl border border-primary p-4 max-w-[387px]">
-            <NoteTop title={title} slug={slug} type={type} />
+            <NoteTop title={title} id={id} slug={slug} type={type} />
 
             <NoteInfo
                 content={content}

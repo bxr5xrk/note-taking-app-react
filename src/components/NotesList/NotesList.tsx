@@ -20,6 +20,7 @@ const NotesList: FC<NotesListProps> = ({ notes, type, title }) => {
                 {notes &&
                     notes.map((i) => (
                         <NoteItem
+                            id={i.id}
                             type={type}
                             key={i.slug}
                             title={i.title}

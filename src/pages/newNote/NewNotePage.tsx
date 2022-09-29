@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
 import { categories } from "../../config";
 import { selectNotes, setActive } from "../../store/slices/notesSlice";
@@ -36,21 +37,18 @@ const NewNotePage: FC = () => {
         }
     };
 
+    console.log(title);
+
     return (
         <form
             className="flex flex-col items-start gap-5"
             onSubmit={(e) => handleSubmit(e)}
         >
-            <input
-                ref={titleRef}
-                type="text"
-                autoFocus
-                placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                maxLength={30}
-                minLength={2}
-                className="text-4xl font-semibold"
+            <Input
+                titleRef={titleRef}
+                title={title}
+                setTitle={setTitle}
+                isEditable={false}
             />
 
             <Select
@@ -65,6 +63,8 @@ const NewNotePage: FC = () => {
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Enter content"
                 className="h-[400px] w-[400px] text-xl"
+                maxLength={500}
+                minLength={1}
             ></textarea>
 
             <button className="btn" type="submit">
