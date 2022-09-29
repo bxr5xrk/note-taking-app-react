@@ -41,10 +41,8 @@ const notesSlice = createSlice({
 
             localStorage.setItem("active", JSON.stringify(state.activeNotes));
         },
-        deleteNote(state, action: PayloadAction<string>) {
-            const find = state.activeNotes.find(
-                (i) => i.slug === action.payload
-            );
+        deleteNote(state, action: PayloadAction<number>) {
+            const find = state.activeNotes.find((i) => i.id === action.payload);
 
             if (find) {
                 const index = state.activeNotes.indexOf(find);
@@ -52,7 +50,7 @@ const notesSlice = createSlice({
             } else {
                 if (state.archiveNotes) {
                     const find = state.archiveNotes.find(
-                        (i) => i.slug === action.payload
+                        (i) => i.id === action.payload
                     );
                     if (find) {
                         const index = state.archiveNotes.indexOf(find);
@@ -64,10 +62,8 @@ const notesSlice = createSlice({
             localStorage.setItem("active", JSON.stringify(state.activeNotes));
             localStorage.setItem("archive", JSON.stringify(state.archiveNotes));
         },
-        setArchive(state, action: PayloadAction<string>) {
-            const find = state.activeNotes.find(
-                (i) => i.slug === action.payload
-            );
+        setArchive(state, action: PayloadAction<number>) {
+            const find = state.activeNotes.find((i) => i.id === action.payload);
             if (find) {
                 notesSlice.caseReducers.deleteNote(state, action);
                 if (state.archiveNotes) {
@@ -78,7 +74,7 @@ const notesSlice = createSlice({
             } else {
                 if (state.archiveNotes) {
                     const find = state.archiveNotes.find(
-                        (i) => i.slug === action.payload
+                        (i) => i.id === action.payload
                     );
                     if (find) {
                         const index = state.archiveNotes.indexOf(find);
