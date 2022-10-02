@@ -37,8 +37,6 @@ const NewNotePage: FC = () => {
         }
     };
 
-    console.log(title);
-
     return (
         <form
             className="flex flex-col items-start gap-5"
